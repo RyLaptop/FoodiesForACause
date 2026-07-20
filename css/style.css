@@ -325,6 +325,12 @@ h2.section-title {
   font-weight: 600;
 }
 
+.officer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .officer-card .info { padding: 18px; }
 .officer-card h3 { margin: 0 0 4px; font-size: 1.05rem; }
 .officer-card .role { color: var(--maroon); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; }
