@@ -565,6 +565,17 @@ h2.section-title {
   border-radius: 999px;
 }
 
+.officer-card a.role {
+  transition: background 150ms var(--ease), transform 150ms var(--ease);
+}
+
+.officer-card a.role:hover,
+.officer-card a.role:focus-visible {
+  background: var(--maroon-dark);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
 /* ---------- Event rows (calendar-stamp style) ---------- */
 .event-row {
   background: var(--warm-white);
