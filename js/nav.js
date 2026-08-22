@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (mobileToggle && navList) {
     mobileToggle.addEventListener('click', function () {
-      navList.classList.toggle('open');
+      var open = navList.classList.toggle('open');
+      mobileToggle.setAttribute('aria-expanded', String(open));
     });
   }
 

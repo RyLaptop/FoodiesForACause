@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <header class="site-header">
   <div class="nav-wrap">
     <a href="../index.html" class="brand">
@@ -19,8 +21,8 @@
       Foodies For A Cause
     </a>
     <nav>
-      <button class="nav-toggle-mobile" aria-label="Toggle menu">&#9776;</button>
-      <ul>
+      <button class="nav-toggle-mobile" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">&#9776;</button>
+      <ul id="primary-nav">
         <li><a href="../index.html">Home</a></li>
         <li><a href="../meetings.html">Meetings</a></li>
         <li class="has-dropdown">
@@ -40,6 +42,8 @@
     </nav>
   </div>
 </header>
+
+<main id="main-content">
 
 <section class="page-hero">
   <h1>Fundraisers</h1>
@@ -71,6 +75,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="site-footer">
   <div class="footer-wrap">
