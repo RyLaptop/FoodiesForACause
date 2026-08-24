@@ -787,6 +787,14 @@ footer.site-footer .footer-bottom a:hover {
 .ftv-banner-btn { background: var(--gold); border-color: var(--gold); color: var(--maroon-deep) !important; flex-shrink: 0; }
 .ftv-banner-btn:hover { background: var(--warm-white); border-color: var(--warm-white); }
 
+/* Small officer-recruitment banner: same pattern, lower visual weight than the FTV banner */
+.officer-recruit-banner {
+  background: var(--maroon-deep);
+  padding: 16px 0;
+}
+.officer-recruit-banner .ftv-banner-title { font-size: 1.1rem; margin: 2px 0 4px; }
+.officer-recruit-banner .ftv-banner-copy { font-size: 0.85rem; }
+
 /* A pinned card can be a link (Feed The Valley activity card) without losing card styling. */
 a.card { display: block; text-decoration: none; color: inherit; }
 a.card:hover { text-decoration: none; }
