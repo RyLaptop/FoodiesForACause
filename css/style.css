@@ -787,13 +787,32 @@ footer.site-footer .footer-bottom a:hover {
 .ftv-banner-btn { background: var(--gold); border-color: var(--gold); color: var(--maroon-deep) !important; flex-shrink: 0; }
 .ftv-banner-btn:hover { background: var(--warm-white); border-color: var(--warm-white); }
 
-/* Small officer-recruitment banner: same pattern, lower visual weight than the FTV banner */
+/* Small officer-recruitment banner: light, dashed "open position" look —
+   deliberately distinct from the dark FTV gradient banner above. */
 .officer-recruit-banner {
-  background: var(--maroon-deep);
+  background: var(--paper);
+  border-top: 2px dashed var(--border-strong);
+  border-bottom: 2px dashed var(--border-strong);
   padding: 16px 0;
 }
-.officer-recruit-banner .ftv-banner-title { font-size: 1.1rem; margin: 2px 0 4px; }
-.officer-recruit-banner .ftv-banner-copy { font-size: 0.85rem; }
+.officer-recruit-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.officer-recruit-eyebrow { color: var(--gold-dark); text-align: left; margin: 0 0 2px; }
+.officer-recruit-title { font-size: 1.1rem; color: var(--maroon); margin: 2px 0 4px; }
+.officer-recruit-copy { margin: 0; max-width: 56ch; color: var(--gray); font-size: 0.85rem; }
+.officer-recruit-btn {
+  background: transparent;
+  color: var(--maroon);
+  border: 2px dashed var(--maroon);
+  flex-shrink: 0;
+  padding: 9px 22px;
+}
+.officer-recruit-btn:hover { background: var(--maroon); color: var(--warm-white); border-style: solid; }
 
 /* A pinned card can be a link (Feed The Valley activity card) without losing card styling. */
 a.card { display: block; text-decoration: none; color: inherit; }
@@ -856,4 +875,7 @@ a.card:hover { text-decoration: none; }
 
   .ftv-banner-inner { flex-direction: column; align-items: flex-start; text-align: left; }
   .ftv-banner-btn { width: 100%; text-align: center; }
+
+  .officer-recruit-inner { flex-direction: column; align-items: flex-start; text-align: left; }
+  .officer-recruit-btn { width: 100%; text-align: center; }
 }
