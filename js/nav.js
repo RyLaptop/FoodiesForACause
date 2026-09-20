@@ -32,6 +32,25 @@ document.addEventListener('DOMContentLoaded', function () {
   var revealTargets = document.querySelectorAll('.card, .officer-card, .event-row');
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Count-up for the Feed The Valley "people fed" counter; final value is in the HTML.
+  var counter = document.getElementById('people-fed');
+  if (counter && !prefersReducedMotion && 'IntersectionObserver' in window) {
+    var target = parseInt(counter.getAttribute('data-count'), 10);
+    var counterObserver = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      counterObserver.disconnect();
+      var startTime = null;
+      var tick = function (now) {
+        if (startTime === null) startTime = now;
+        var p = Math.min((now - startTime) / 1200, 1);
+        counter.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+    counterObserver.observe(counter);
+  }
+
   if (revealTargets.length && !prefersReducedMotion && 'IntersectionObserver' in window) {
     revealTargets.forEach(function (el) { el.classList.add('reveal-fade'); });
 

@@ -787,31 +787,33 @@ footer.site-footer .footer-bottom a:hover {
 .ftv-banner-btn { background: var(--gold); border-color: var(--gold); color: var(--maroon-deep) !important; flex-shrink: 0; }
 .ftv-banner-btn:hover { background: var(--warm-white); border-color: var(--warm-white); }
 
-/* Officer-recruitment banner: light paper banner, same scale as the FTV
-   banner above it, but light instead of dark so the two read as distinct. */
-.officer-recruit-banner {
-  background: var(--paper);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 34px 0;
-}
-.officer-recruit-inner {
-  display: flex;
+/* Feed The Valley impact counter */
+.impact-counter {
+  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  flex-wrap: wrap;
+  margin-top: 8px;
+  padding: 22px 40px;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
 }
-.officer-recruit-eyebrow { color: var(--gold-dark); text-align: left; margin: 0 0 10px; }
-.officer-recruit-title { font-size: 1.5rem; color: var(--maroon); margin: 6px 0 8px; }
-.officer-recruit-copy { margin: 0; max-width: 56ch; color: var(--gray); font-size: 0.96rem; }
-.officer-recruit-btn {
-  background: var(--maroon);
-  color: var(--warm-white);
-  border: 2px solid var(--maroon);
-  flex-shrink: 0;
+.impact-number {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 800;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--maroon);
+  font-variant-numeric: tabular-nums;
 }
-.officer-recruit-btn:hover { background: var(--maroon-dark); border-color: var(--maroon-dark); color: var(--warm-white); }
+.impact-label {
+  margin-top: 6px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
 
 /* A pinned card can be a link (Feed The Valley activity card) without losing card styling. */
 a.card { display: block; text-decoration: none; color: inherit; }
@@ -875,6 +877,4 @@ a.card:hover { text-decoration: none; }
   .ftv-banner-inner { flex-direction: column; align-items: flex-start; text-align: left; }
   .ftv-banner-btn { width: 100%; text-align: center; }
 
-  .officer-recruit-inner { flex-direction: column; align-items: flex-start; text-align: left; }
-  .officer-recruit-btn { width: 100%; text-align: center; }
 }
