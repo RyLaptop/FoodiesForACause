@@ -789,10 +789,12 @@ footer.site-footer .footer-bottom a:hover {
 
 /* Feed The Valley impact counter */
 .impact-counter {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 8px auto 0;
   padding: 22px 40px;
   background: var(--warm-white);
   border: 1px solid var(--border);
