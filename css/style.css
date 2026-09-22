@@ -898,3 +898,27 @@ a.card:hover { text-decoration: none; }
 .carousel-dots button[aria-current="true"] { background: var(--yellow); transform: scale(1.3); }
 @media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
 @media (max-width: 600px) { .carousel-btn { width: 36px; height: 36px; font-size: 1.3rem; } }
+
+/* Slide-deck carousel (16:9 meeting slides) */
+.carousel.deck .slide { height: auto; aspect-ratio: 16 / 9; }
+.carousel.deck .slide::before { display: none; }
+
+/* Flyer feature: current flyer + event details */
+.flyer-feature { display: grid; grid-template-columns: minmax(0, 320px) 1fr; gap: 2rem; align-items: center; margin-top: 1.75rem; padding: 1.5rem; background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); }
+.flyer-feature + .flyer-feature, .flyer-feature + .event-row { margin-top: 1.5rem; }
+.flyer-feature .flyer { display: block; border-radius: 4px; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+.flyer-feature .flyer:hover, .flyer-feature .flyer:focus-visible { transform: translateY(-3px) rotate(-0.6deg); box-shadow: var(--shadow-lg); }
+.flyer-feature .flyer img { display: block; width: 100%; height: auto; }
+.flyer-feature .flyer-body h3 { margin: 0.25rem 0 0.75rem; }
+.flyer-feature .flyer-body dl { display: grid; grid-template-columns: auto 1fr; gap: 0.4rem 1rem; margin: 0 0 1rem; }
+.flyer-feature .flyer-body dt { font-weight: 700; color: var(--maroon); }
+.flyer-feature .flyer-body dd { margin: 0; }
+.flyer-feature .flyer-hint { font-size: 0.85rem; color: var(--gray); }
+.meeting-summary { margin-top: 1.75rem; }
+.meeting-summary ul { padding-left: 1.2rem; }
+.meeting-summary li { margin-bottom: 0.4rem; }
+@media (prefers-reduced-motion: reduce) { .flyer-feature .flyer { transition: none; } }
+@media (max-width: 720px) {
+  .flyer-feature { grid-template-columns: 1fr; padding: 1rem; }
+  .flyer-feature .flyer { max-width: 360px; margin: 0 auto; }
+}
