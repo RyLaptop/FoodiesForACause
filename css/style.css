@@ -880,3 +880,21 @@ a.card:hover { text-decoration: none; }
   .ftv-banner-btn { width: 100%; text-align: center; }
 
 }
+
+/* Photo carousel */
+.carousel { position: relative; margin-top: 2rem; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); background: var(--black); }
+.carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel .slide { position: relative; flex: 0 0 100%; height: clamp(340px, 62vw, 600px); margin: 0; scroll-snap-align: center; isolation: isolate; }
+.carousel .slide::before { content: ""; position: absolute; inset: -30px; background: var(--bg) center / cover; filter: blur(28px) brightness(0.55); z-index: -1; }
+.carousel .slide img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.carousel .slide figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.2rem 1.25rem 2.4rem; color: #fff; font-size: 0.95rem; background: linear-gradient(transparent, rgba(28, 23, 18, 0.8)); }
+.carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255, 252, 246, 0.92); color: var(--maroon); font-size: 1.6rem; line-height: 1; cursor: pointer; box-shadow: var(--shadow-md); transition: background 0.2s var(--ease), color 0.2s var(--ease); }
+.carousel-btn:hover, .carousel-btn:focus-visible { background: var(--maroon); color: #fff; }
+.carousel-btn.prev { left: 0.75rem; }
+.carousel-btn.next { right: 0.75rem; }
+.carousel-dots { position: absolute; left: 0; right: 0; bottom: 0.9rem; display: flex; justify-content: center; gap: 0.5rem; }
+.carousel-dots button { width: 10px; height: 10px; padding: 0; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.5); cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.carousel-dots button[aria-current="true"] { background: var(--yellow); transform: scale(1.3); }
+@media (prefers-reduced-motion: reduce) { .carousel-track { scroll-behavior: auto; } }
+@media (max-width: 600px) { .carousel-btn { width: 36px; height: 36px; font-size: 1.3rem; } }
