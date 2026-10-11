@@ -590,6 +590,10 @@ h2.section-title {
   transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
 }
 
+.carousel + .event-row, .meeting-summary + .event-row { position: relative; margin-top: 5rem; }
+/* Divider between stacked past events: fading rule with a diamond */
+.carousel + .event-row::before, .meeting-summary + .event-row::before { content: ""; position: absolute; left: 0; right: 0; top: -2.5rem; height: 3px; border-radius: 2px; background: linear-gradient(to right, transparent, var(--maroon) 20%, var(--maroon) 80%, transparent); }
+.carousel + .event-row::after, .meeting-summary + .event-row::after { content: ""; position: absolute; left: 50%; top: calc(-2.5rem + 1.5px); width: 14px; height: 14px; background: var(--yellow); border: 3px solid var(--maroon); transform: translate(-50%, -50%) rotate(45deg); }
 .event-row:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 
 .event-row .date-stamp {
