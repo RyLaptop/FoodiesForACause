@@ -653,8 +653,12 @@ h2.section-title {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
-  max-width: 820px;
+  max-width: 1000px;
   margin: 0 auto 48px;
+}
+
+@media (min-width: 781px) {
+  .contact-info-grid { grid-template-columns: 1.7fr 1fr 1fr; }
 }
 
 .contact-info-grid .card { text-align: center; }
