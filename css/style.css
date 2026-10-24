@@ -383,6 +383,7 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
 
 /* ---------- Sections ---------- */
 section { padding: 68px 0; }
+section.impact-section { padding: 34px 0; }
 
 section.alt {
   background: var(--paper);
@@ -867,6 +868,7 @@ a.card:hover { text-decoration: none; }
   .page-hero h1 { font-size: 1.6rem; }
 
   section { padding: 46px 0; }
+  section.impact-section { padding: 26px 0; }
   h2.section-title { font-size: 1.5rem; }
   .section-lede { margin-bottom: 32px; }
 
