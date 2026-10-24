@@ -383,6 +383,7 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
 
 /* ---------- Sections ---------- */
 section { padding: 68px 0; }
+#rsvp { scroll-margin-top: 70px; }
 section.impact-section { padding: 34px 0; }
 
 section.alt {
