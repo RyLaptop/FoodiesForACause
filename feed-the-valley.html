@@ -54,6 +54,39 @@
 </section>
 
 <section>
+  <div class="container" style="text-align:center;">
+    <span class="eyebrow-tag">Impact</span>
+    <h2 class="section-title">Neighbors we've fed</h2>
+
+    <div class="impact-counter">
+      <span class="impact-number" id="people-fed" data-count="53" aria-live="polite">53</span>
+      <span class="impact-label">People Fed So Far</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="container" style="text-align:center;">
+    <span class="eyebrow-tag">Reserve a Meal</span>
+    <h2 class="section-title">RSVP for a free meal</h2>
+    <p class="section-lede">Reserve a free meal at our next Feed The Valley event. No questions asked.</p>
+    <form id="vf" style="text-align:left;" class="native-form" novalidate>
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
+      <label for="party">How many people are you reserving for?</label>
+      <input id="party" name="party_size" type="number" min="1" max="20" value="1" required>
+      <label for="contact">Phone or email (optional, so we can reach you about the event)</label>
+      <input id="contact" name="contact" type="text" maxlength="254">
+      <label for="note">Dietary needs or allergies (optional)</label>
+      <textarea id="note" name="note" maxlength="500"></textarea>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button id="go" class="btn btn-solid" type="submit">Reserve my meal</button>
+      <div id="msg" class="form-msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<section>
   <div class="container">
     <span class="eyebrow-tag">What It Is</span>
     <h2 class="section-title">A community relief program, not a one-off drive</h2>
@@ -85,18 +118,6 @@
 </section>
 
 <section class="alt">
-  <div class="container" style="text-align:center;">
-    <span class="eyebrow-tag">Impact</span>
-    <h2 class="section-title">Neighbors we've fed</h2>
-
-    <div class="impact-counter">
-      <span class="impact-number" id="people-fed" data-count="53" aria-live="polite">53</span>
-      <span class="impact-label">People Fed So Far</span>
-    </div>
-  </div>
-</section>
-
-<section>
   <div class="container">
     <span class="eyebrow-tag">Up Next</span>
     <h2 class="section-title">Next event coming soon</h2>
@@ -112,7 +133,7 @@
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="container">
     <span class="eyebrow-tag">Past Events</span>
     <h2 class="section-title">Where we've been</h2>
@@ -139,13 +160,12 @@
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="container" style="text-align:center;">
     <span class="eyebrow-tag">Get Involved</span>
     <h2 class="section-title">Volunteer or point someone our way</h2>
     <p class="section-lede">Want to help run a table, or know someone who could use a meal or a free screening? Reach out and we'll get you what you need.</p>
     <div class="hero-buttons" style="justify-content:center;">
-      <a href="ftv-rsvp.html" class="btn btn-solid">RSVP for a Meal</a>
       <a href="contact.html" class="btn btn-solid">Contact Us</a>
       <a href="events/service.html" class="btn btn-solid">All Service Events</a>
       <a href="donate.html" class="btn btn-solid">Support Us</a>
@@ -181,5 +201,31 @@
 
 <script src="js/carousel.js"></script>
 <script src="js/nav.js"></script>
+
+<script>
+// The publishable key is public by design: RLS lets it insert into ftv_rsvps and nothing else.
+const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX60hLmCo8t7SU48Zkee1w_gr79c7MJ";
+const $ = id => document.getElementById(id);
+function say(t, ok) { const m = $("msg"); m.textContent = t; m.className = "form-msg " + (ok ? "ok" : "err"); }
+$("vf").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.target, d = new FormData(f);
+  if (d.get("website")) return; // honeypot
+  const name = (d.get("name") || "").trim(), party = Number(d.get("party_size"));
+  if (name.length < 2) return say("Please enter your name.");
+  if (!(party >= 1 && party <= 20)) return say("Please enter a party size from 1 to 20.");
+  const btn = $("go"); btn.disabled = true; say("");
+  try {
+    const r = await fetch(SB + "/rest/v1/ftv_rsvps", {
+      method: "POST",
+      headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json", Prefer: "return=minimal"},
+      body: JSON.stringify({name, party_size: party, contact: (d.get("contact") || "").trim() || null, note: (d.get("note") || "").trim() || null})
+    });
+    if (r.ok) { f.reset(); say("You're on the list. See you there!", true); }
+    else say("Something went wrong. Please try again.");
+  } catch (err) { say("Network error. Please try again."); }
+  btn.disabled = false;
+});
+</script>
 </body>
 </html>
