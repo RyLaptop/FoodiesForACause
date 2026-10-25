@@ -1,6 +1,7 @@
 // To add an event: append a line to EVENTS. d = YYYY-MM-DD, c = meeting | fundraiser | service | social | ftv.
 const CATS = {meeting: "Meeting", fundraiser: "Fundraiser", service: "Service", social: "Social", ftv: "Feed The Valley"};
 const EVENTS = [
+  {d: "2026-04-18", c: "service", t: "Brazos Valley Food Bank", time: "", where: "Brazos Valley Food Bank", href: "events/service.html"},
   {d: "2026-08-27", c: "fundraiser", t: "Bake Sale", time: "10 PM–1 AM", where: "Northgate, behind Bottlecap Alley", href: "events/fundraisers.html"},
   {d: "2026-08-28", c: "fundraiser", t: "Bake Sale", time: "10 PM–1 AM", where: "Northgate, behind Bottlecap Alley", href: "events/fundraisers.html"},
   {d: "2026-09-09", c: "meeting", t: "First General Meeting", time: "5:30–6:30 PM", where: "Koldus Building, Room 146", href: "meetings.html"},
@@ -48,6 +49,15 @@ function upcoming() {
   }).join("") : '<p class="section-lede">No upcoming events right now. Check back soon.</p>';
 }
 
+function past() {
+  const list = EVENTS.filter(e => e.d < todayIso).sort((a, b) => b.d.localeCompare(a.d));
+  $("past").innerHTML = list.map(e => {
+    const dt = new Date(e.d + "T12:00:00");
+    return '<a class="cal-item" href="' + e.href + '"><span class="cal-when"><b>' + dt.toLocaleString("en-US", {month: "short"}).toUpperCase() + "</b>" + dt.getDate() +
+      '</span><span><strong>' + e.t + '</strong><br><small><i class="cal-dot cat-' + e.c + '"></i>' + CATS[e.c] + " · " + detail(e) + "</small></span></a>";
+  }).join("");
+}
+
 $("prev").onclick = () => { m--; if (m < 0) { m = 11; y--; } render(); };
 $("next").onclick = () => { m++; if (m > 11) { m = 0; y++; } render(); };
-render(); upcoming();
+render(); upcoming(); past();
