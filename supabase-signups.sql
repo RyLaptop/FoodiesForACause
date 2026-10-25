@@ -22,3 +22,12 @@ create policy "anon insert" on event_signups for insert to anon with check (true
 
 grant usage on schema public to anon;
 grant insert on event_signups to anon;
+
+-- Added later: tag responses with the event date and expose a public count for the FTV counters.
+alter table event_signups add column if not exists event_date date;
+
+create or replace function ftv_signup_counts(p_date date) returns json
+language sql security definer set search_path = public as
+$$ select json_build_object('volunteers', count(*) filter (where attending), 'cooks', count(*) filter (where can_cook))
+   from event_signups where form = 'ftv' and event_date = p_date $$;
+grant execute on function ftv_signup_counts(date) to anon;
