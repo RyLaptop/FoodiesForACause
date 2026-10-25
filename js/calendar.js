@@ -19,6 +19,7 @@ const EVENTS = [
   {d: "2026-11-18", c: "meeting", t: "Fifth General Meeting", time: "5:30–6:30 PM", where: "Location to be announced", href: "meetings.html"},
   {d: "2026-12-02", c: "meeting", t: "Sixth General Meeting", time: "5:30–6:30 PM", where: "Location to be announced", href: "meetings.html"},
   {d: "2026-11-19", c: "fundraiser", t: "Bake Sale at Bottlecap Alley", time: "10 PM–1 AM", where: "Northgate, behind Bottlecap Alley", href: "events/fundraisers.html"},
+  {d: "2026-12-04", c: "social", t: "First Friday", time: "6–9 PM", where: "Downtown Bryan", href: "events/social.html"},
   {d: "2026-11-06", c: "social", t: "First Friday", time: "6–9 PM", where: "Downtown Bryan", href: "events/social.html"},
   {d: "2026-11-07", c: "ftv", t: "Feed The Valley", time: "1–3 PM (may change)", where: "903 N Washington Ave, Bryan", href: "feed-the-valley.html"}
 ];
