@@ -972,3 +972,11 @@ nav a, .brand { white-space: nowrap; }
   nav a { padding: 8px 8px; font-size: 0.88rem; }
   .brand { font-size: 1rem; gap: 8px; }
 }
+
+/* FTV volunteer needs */
+.need-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 560px; margin: 0 auto 1.5rem; }
+.need { border: 1px solid var(--border-strong); background: var(--warm-white); border-radius: var(--radius); padding: 14px 8px; text-align: center; }
+.need b { display: block; font-size: 2rem; line-height: 1.1; color: var(--maroon); }
+.need span { font-size: 0.85rem; color: var(--gray); }
+.form-intro { max-width: 560px; margin: 0 auto 1.5rem; }
+@media (max-width: 480px) { .need-grid { grid-template-columns: 1fr; } }
