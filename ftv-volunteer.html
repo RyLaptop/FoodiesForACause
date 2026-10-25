@@ -54,7 +54,7 @@
 
 <section>
   <div class="container">
-    <form id="sf" class="native-form" data-form="ftv" data-fields="volunteering,can_cook,associate_screener" novalidate>
+    <form id="sf" class="native-form" data-form="ftv" data-fields="volunteering,can_cook,associate_screener,needs_ride,can_give_rides" novalidate>
       <label for="name">Full name</label>
       <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
       <label for="phone">Phone number</label>
@@ -75,6 +75,16 @@
         <legend>Are you an associate screener?</legend>
         <label class="opt"><input type="radio" name="associate_screener" value="yes" required> Yes</label>
         <label class="opt"><input type="radio" name="associate_screener" value="no"> No</label>
+      </fieldset>
+      <fieldset class="yn">
+        <legend>Do you need a ride?</legend>
+        <label class="opt"><input type="radio" name="needs_ride" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="needs_ride" value="no"> No</label>
+      </fieldset>
+      <fieldset class="yn">
+        <legend>Can you provide rides to others?</legend>
+        <label class="opt"><input type="radio" name="can_give_rides" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="can_give_rides" value="no"> No</label>
       </fieldset>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button id="go" class="btn btn-solid" type="submit">Sign up</button>
