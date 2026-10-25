@@ -69,9 +69,17 @@
       </div>
     </div>
 
-    <div class="form-embed">
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdJ9s6FWHTTOOhvJ5DEQoxwUb-xjnVLk34b5UVXIBrp7-etcA/viewform?embedded=true" height="700" title="FFAC Contact Form">Loading form&hellip;</iframe>
-    </div>
+    <form id="cf" class="native-form" style="margin-top:2.5rem;" novalidate>
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required maxlength="2000"></textarea>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button id="go" class="btn btn-solid" type="submit">Send message</button>
+      <div id="msg" class="form-msg" role="status" aria-live="polite"></div>
+    </form>
   </div>
 </section>
 
@@ -101,5 +109,6 @@
 </footer>
 
 <script src="js/nav.js"></script>
+<script src="js/contact.js"></script>
 </body>
 </html>
