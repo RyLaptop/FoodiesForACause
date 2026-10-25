@@ -505,8 +505,6 @@ h2.section-title {
   transition: transform 320ms var(--ease), box-shadow 320ms var(--ease);
 }
 
-.grid .officer-card:nth-child(odd) { transform: rotate(-0.5deg); }
-.grid .officer-card:nth-child(even) { transform: rotate(0.5deg); }
 .officer-card:hover { transform: rotate(0deg) translateY(-5px); box-shadow: var(--shadow-lg); z-index: 2; }
 
 .officer-photo {
