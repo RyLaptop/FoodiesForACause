@@ -944,3 +944,7 @@ a.card:hover { text-decoration: none; }
 .form-msg { margin-top: 1rem; font-weight: 600; }
 .form-msg.ok { color: #1a6b2f; }
 .form-msg.err { color: #a11; }
+.native-form fieldset.yn { border: 0; padding: 0; margin: 1.1rem 0 0; }
+.native-form fieldset.yn legend { font-weight: 600; color: var(--maroon); padding: 0; margin-bottom: 0.3rem; }
+.native-form label.opt { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0 1.25rem 0 0; font-weight: 500; color: inherit; }
+.native-form label.opt input { width: auto; }
