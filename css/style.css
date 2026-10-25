@@ -5,22 +5,22 @@
    the site's real three-pillar structure instead of decorating it. */
 
 :root {
-  --maroon: #500000;
-  --maroon-dark: #350000;
-  --maroon-deep: #2a0000;
-  --black: #1c1712;
-  --cream: #faf5ea;
-  --paper: #f2ead9;
-  --warm-white: #fffcf6;
-  --gold: #c99a3f;
-  --gold-dark: #9c7526;
-  --herb: #4f6b41;
-  --herb-dark: #3a4f30;
-  --yellow: #f5c518;
-  --gray: #6b6153;
-  --gray-light: #948a7a;
-  --border: #ddd2bd;
-  --border-strong: #c9bb9e;
+  --maroon: #d95f0e;
+  --maroon-dark: #b34a07;
+  --maroon-deep: #5c2503;
+  --black: #111;
+  --cream: #efefef;
+  --paper: #e6e6e6;
+  --warm-white: #f8f8f8;
+  --gold: #ffb066;
+  --gold-dark: #b34a07;
+  --herb: #b34a07;
+  --herb-dark: #8a3a05;
+  --yellow: #ffb066;
+  --gray: #555;
+  --gray-light: #888;
+  --border: #d2d2d2;
+  --border-strong: #b5b5b5;
   --radius: 6px;
   --shadow-sm: 0 2px 6px -2px rgba(28, 23, 18, 0.16);
   --shadow-md: 0 10px 24px -10px rgba(28, 23, 18, 0.26), 0 3px 8px rgba(28, 23, 18, 0.08);
@@ -44,20 +44,17 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: 'Public Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
   background-color: var(--cream);
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(28, 23, 18, 0.05) 1px, transparent 0);
-  background-size: 22px 22px;
   color: var(--black);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, .brand {
-  font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  font-family: 'Poppins', system-ui, sans-serif;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: 0.02em;
   /* No color here on purpose: h1/h2/h3 must inherit from their section
      (.hero and .page-hero set white) rather than override it — an explicit
@@ -164,7 +161,7 @@ nav a {
   transition: color 150ms var(--ease), background 150ms var(--ease);
 }
 
-nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decoration: none; }
+nav a:hover { color: var(--maroon); background: rgba(217, 95, 14, 0.06); text-decoration: none; }
 
 .nav-cta {
   background: var(--maroon);
@@ -173,11 +170,11 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
   border-radius: 999px;
   font-weight: 600;
   margin-left: 4px;
-  box-shadow: 0 3px 10px -3px rgba(80, 0, 0, 0.55);
+  box-shadow: 0 3px 10px -3px rgba(217, 95, 14, 0.55);
   transition: background 150ms var(--ease), transform 150ms var(--ease), box-shadow 150ms var(--ease);
 }
 
-.nav-cta:hover { background: var(--maroon-dark); transform: translateY(-1px); box-shadow: 0 6px 14px -4px rgba(80, 0, 0, 0.55); }
+.nav-cta:hover { background: var(--maroon-dark); transform: translateY(-1px); box-shadow: 0 6px 14px -4px rgba(217, 95, 14, 0.55); }
 .nav-cta:active { transform: translateY(0) scale(0.97); }
 
 /* Dropdown (native details/summary - no JS required) */
@@ -200,7 +197,7 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
 
 .has-dropdown summary.dropdown-toggle::-webkit-details-marker { display: none; }
 .has-dropdown summary.dropdown-toggle::marker { content: ''; }
-.has-dropdown summary.dropdown-toggle:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); }
+.has-dropdown summary.dropdown-toggle:hover { color: var(--maroon); background: rgba(217, 95, 14, 0.06); }
 
 .dropdown-menu {
   position: absolute;
@@ -251,8 +248,6 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.09) 1px, transparent 0);
-  background-size: 26px 26px;
   pointer-events: none;
 }
 
@@ -271,7 +266,7 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Public Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -367,8 +362,6 @@ nav a:hover { color: var(--maroon); background: rgba(80, 0, 0, 0.06); text-decor
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.07) 1px, transparent 0);
-  background-size: 24px 24px;
   pointer-events: none;
 }
 
@@ -413,7 +406,7 @@ h2.section-title {
 
 .section-lede {
   text-align: center;
-  font-family: 'Public Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-style: italic;
   font-weight: 500;
   font-size: 1.08rem;
@@ -534,7 +527,7 @@ h2.section-title {
 }
 
 .officer-photo .initials {
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 2.2rem;
   font-weight: 700;
 }
@@ -605,7 +598,7 @@ h2.section-title {
   border-radius: 8px;
   text-align: center;
   overflow: hidden;
-  font-family: 'Public Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .event-row .date-stamp .month {
@@ -621,7 +614,7 @@ h2.section-title {
 
 .event-row .date-stamp .day {
   display: block;
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.9rem;
   font-weight: 800;
   color: var(--maroon);
@@ -697,7 +690,7 @@ h2.section-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 800;
   font-size: 1.35rem;
   color: var(--maroon);
@@ -725,7 +718,7 @@ footer.site-footer {
 }
 
 .footer-wrap .brand-col strong {
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   letter-spacing: 0.02em;
   font-size: 1.15rem;
@@ -811,7 +804,7 @@ footer.site-footer .footer-bottom a:hover {
   border-radius: 12px;
 }
 .impact-number {
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 800;
   font-size: 4.5rem;
   line-height: 1;
