@@ -250,6 +250,32 @@
   </div>
 </section>
 
+<section class="alt" id="join">
+  <div class="container">
+    <span class="eyebrow-tag">Join Us</span>
+    <h2 class="section-title">Become a member</h2>
+    <p class="section-lede">Sign up to join Foodies For A Cause. We'll add you to our member list.</p>
+    <form id="mf" class="native-form" novalidate>
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" required maxlength="20">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+      <label for="uin">UIN</label>
+      <input id="uin" name="uin" type="text" inputmode="numeric" pattern="[0-9]{9}" required maxlength="9">
+      <label for="class_year">Class year</label>
+      <select id="class_year" name="class_year" required>
+        <option value="">Select one</option>
+        <option>Freshman</option><option>Sophomore</option><option>Junior</option><option>Senior</option><option>Graduate</option>
+      </select>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button id="go" class="btn btn-solid" type="submit">Sign up</button>
+      <div id="msg" class="form-msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">
@@ -277,5 +303,6 @@
 
 <script src="js/carousel.js"></script>
 <script src="js/nav.js"></script>
+<script src="js/membership.js"></script>
 </body>
 </html>
