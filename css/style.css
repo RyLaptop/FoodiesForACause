@@ -338,6 +338,8 @@ nav a:hover { color: var(--maroon); background: rgba(217, 95, 14, 0.06); text-de
 }
 
 .btn-outline:hover { background: rgba(255, 252, 246, 0.12); border-color: var(--warm-white); color: var(--warm-white); }
+.hero-buttons .btn-outline { background: var(--warm-white); border-color: var(--warm-white); color: var(--maroon); }
+.hero-buttons .btn-outline:hover { background: var(--gold); border-color: var(--gold); color: var(--maroon-deep); }
 
 .btn-solid {
   background: var(--maroon);
