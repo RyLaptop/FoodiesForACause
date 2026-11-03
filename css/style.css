@@ -956,7 +956,7 @@ a.card:hover { text-decoration: none; }
 .cal-today .cal-num { color: var(--maroon); }
 .cal-chip { display: block; padding: 2px 5px; border-radius: 4px; font-size: 0.72rem; line-height: 1.25; color: #fff !important; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cal-chip:hover { text-decoration: none; filter: brightness(0.9); }
-.cat-meeting { background: #555; } .cat-fundraiser { background: #d95f0e; } .cat-service { background: #3a7d5a; } .cat-social { background: #3b6fb6; } .cat-ftv { background: #a1261b; }
+.cat-meeting { background: #555; } .cat-fundraiser { background: #d95f0e; } .cat-service { background: #3a7d5a; } .cat-social { background: #3b6fb6; } .cat-ftv { background: #a1261b; } .cat-drive { background: #8a5a1c; }
 .cal-item { display: flex; gap: 1rem; align-items: center; padding: 0.8rem 1rem; margin-bottom: 0.6rem; background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius); color: inherit; text-decoration: none; }
 .cal-item:hover { text-decoration: none; border-color: var(--maroon); }
 .cal-when { flex-shrink: 0; width: 56px; text-align: center; font-size: 1.5rem; font-weight: 700; line-height: 1.1; color: var(--black); }
