@@ -15,7 +15,7 @@ const EVENTS = [
   {d: "2026-10-23", c: "service", t: "Bridge Ministry", time: "11:30 AM–12:30 PM", where: "304 Post Office St, Bryan", href: "events/service.html"},
   {d: "2026-10-25", c: "social", t: "FFAC Cookout", time: "2:30 PM", where: "2415 Junction Boys Road", href: "events/social.html"},
   {d: "2026-10-29", c: "fundraiser", t: "Bake Sale at Bottlecap Alley", time: "10 PM–1 AM", where: "Northgate, behind Bottlecap Alley", href: "events/fundraisers.html"},
-  {d: "2026-11-04", c: "meeting", t: "Fourth General Meeting", time: "5:30–6:30 PM", where: "Location to be announced", href: "meetings.html"},
+  {d: "2026-11-04", c: "meeting", t: "Fourth General Meeting", time: "5:30–6:30 PM", where: "Koldus Building, Room 146", href: "meetings.html"},
   {d: "2026-11-18", c: "meeting", t: "Fifth General Meeting", time: "5:30–6:30 PM", where: "Location to be announced", href: "meetings.html"},
   {d: "2026-12-02", c: "meeting", t: "Sixth General Meeting", time: "5:30–6:30 PM", where: "Location to be announced", href: "meetings.html"},
   {d: "2026-11-19", c: "fundraiser", t: "Bake Sale at Bottlecap Alley", time: "10 PM–1 AM", where: "Northgate, behind Bottlecap Alley", href: "events/fundraisers.html"},
