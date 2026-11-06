@@ -16,3 +16,12 @@ create policy "anon insert" on ftv_rsvps for insert to anon with check (true);
 
 grant usage on schema public to anon;
 grant insert on ftv_rsvps to anon;
+
+-- Photo release consent, true when the RSVP box was checked. Null on RSVPs made before the box existed.
+alter table ftv_rsvps add column if not exists photo_release boolean;
+
+-- Public meals-left counter: exposes only the total of party_size, no names or contacts.
+create or replace function ftv_rsvp_total() returns integer
+language sql security definer set search_path = public as
+$$ select coalesce(sum(party_size), 0)::int from ftv_rsvps $$;
+grant execute on function ftv_rsvp_total() to anon;

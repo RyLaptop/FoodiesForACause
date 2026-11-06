@@ -95,6 +95,7 @@
     <span class="eyebrow-tag">Reserve a Meal</span>
     <h2 class="section-title">RSVP for a free meal</h2>
     <p class="section-lede">Reserve a free meal at our next Feed The Valley event. No questions asked.</p>
+    <div class="need-grid" id="meals-wrap" style="grid-template-columns:1fr;max-width:240px;" hidden><div class="need"><b id="meals-left">200</b><span>Meals Still Available</span></div></div>
     <form id="vf" style="text-align:left;" class="native-form" novalidate>
       <label for="name">Name</label>
       <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
@@ -104,6 +105,7 @@
       <input id="contact" name="contact" type="text" maxlength="254">
       <label for="note">Dietary needs or allergies (optional)</label>
       <textarea id="note" name="note" maxlength="500"></textarea>
+      <label class="opt" for="photo" style="display:flex;align-items:flex-start;margin:1.1rem 0 0;"><input id="photo" name="photo_release" type="checkbox" required style="margin-top:0.25rem;"> <span>Photo release: we may take photos at the event, and I'm okay with them being posted by Foodies For A Cause.</span></label>
       <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button id="go" class="btn btn-solid" type="submit">Reserve my meal</button>
       <div id="msg" class="form-msg" role="status" aria-live="polite"></div>
@@ -216,6 +218,15 @@
 // The publishable key is public by design: RLS lets it insert into ftv_rsvps and nothing else.
 const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX60hLmCo8t7SU48Zkee1w_gr79c7MJ";
 const $ = id => document.getElementById(id);
+const MEALS = 200; // meals prepared for this event; change for the next one
+async function loadMeals() {
+  try {
+    const r = await fetch(SB + "/rest/v1/rpc/ftv_rsvp_total", {method: "POST", headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json"}, body: "{}"});
+    const total = await r.json();
+    if (typeof total === "number") { $("meals-left").textContent = Math.max(0, MEALS - total); $("meals-wrap").hidden = false; }
+  } catch (e) {}
+}
+loadMeals();
 function say(t, ok) { const m = $("msg"); m.textContent = t; m.className = "form-msg " + (ok ? "ok" : "err"); }
 $("vf").addEventListener("submit", async e => {
   e.preventDefault();
@@ -224,14 +235,15 @@ $("vf").addEventListener("submit", async e => {
   const name = (d.get("name") || "").trim(), party = Number(d.get("party_size"));
   if (name.length < 2) return say("Please enter your name.");
   if (!(party >= 1 && party <= 20)) return say("Please enter a party size from 1 to 20.");
+  if (!d.get("photo_release")) return say("Please check the photo release box to RSVP.");
   const btn = $("go"); btn.disabled = true; say("");
   try {
     const r = await fetch(SB + "/rest/v1/ftv_rsvps", {
       method: "POST",
       headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json", Prefer: "return=minimal"},
-      body: JSON.stringify({name, party_size: party, contact: (d.get("contact") || "").trim() || null, note: (d.get("note") || "").trim() || null})
+      body: JSON.stringify({name, party_size: party, contact: (d.get("contact") || "").trim() || null, note: (d.get("note") || "").trim() || null, photo_release: true})
     });
-    if (r.ok) { f.reset(); say("You're on the list. See you there!", true); }
+    if (r.ok) { f.reset(); say("You're on the list. See you there!", true); loadMeals(); }
     else say("Something went wrong. Please try again.");
   } catch (err) { say("Network error. Please try again."); }
   btn.disabled = false;
