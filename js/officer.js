@@ -41,7 +41,7 @@ function buildTabs() {
   $("tabs").innerHTML = "";
   for (const [k, t] of Object.entries(TABLES)) {
     const b = document.createElement("button");
-    b.type = "button"; b.className = "btn btn-outline" + (k === current ? " on" : ""); b.textContent = t.label;
+    b.type = "button"; b.className = "btn btn-solid" + (k === current ? " on" : ""); b.textContent = t.label;
     b.onclick = () => { current = k; $("q").value = ""; buildTabs(); load(); };
     $("tabs").appendChild(b);
   }

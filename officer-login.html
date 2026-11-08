@@ -16,7 +16,8 @@
 .op-card{max-width:420px;margin:0 auto;text-align:left}
 .op-bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .op-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
-.op-tabs button.on{background:var(--maroon,#500000);color:#fff}
+.op-tabs button{opacity:.65}
+.op-tabs button.on{opacity:1;box-shadow:0 3px 0 var(--gold,#e8b33c)}
 .op-tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.75rem}
 .op-tools input,.op-tools select{padding:.5rem .6rem;border:1px solid #ccc;border-radius:6px;font:inherit}
 .op-sum{font-weight:600;margin:.25rem 0 .75rem}
@@ -93,14 +94,14 @@
     <div id="app" hidden>
       <div class="op-bar">
         <span class="op-small">Signed in as <b id="who"></b></span>
-        <span><button type="button" class="btn btn-outline" id="refresh">Refresh</button> <button type="button" class="btn btn-outline" data-signout>Sign out</button></span>
+        <span><button type="button" class="btn btn-solid" id="refresh">Refresh</button> <button type="button" class="btn btn-solid" data-signout>Sign out</button></span>
       </div>
       <div class="op-tabs" id="tabs"></div>
       <div class="op-tools">
         <input id="q" type="search" placeholder="Search" aria-label="Search rows">
         <select id="f-event" aria-label="Filter by event date" hidden></select>
         <select id="f-form" aria-label="Filter by form" hidden></select>
-        <button type="button" class="btn btn-outline" id="csv">Download CSV</button>
+        <button type="button" class="btn btn-solid" id="csv">Download CSV</button>
       </div>
       <p class="op-sum" id="sum"></p>
       <div class="op-scroll"><table id="tbl"></table></div>
