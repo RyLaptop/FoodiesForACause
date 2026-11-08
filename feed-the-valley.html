@@ -92,7 +92,7 @@
     <span class="eyebrow-tag">Reserve a Meal</span>
     <h2 class="section-title">RSVP for a free meal</h2>
     <p class="section-lede">Reserve a free meal at our next Feed The Valley event.</p>
-    <div class="need-grid" id="meals-wrap" style="grid-template-columns:1fr;max-width:240px;" hidden><div class="need"><b id="meals-left">200</b><span>Meals Still Available</span></div></div>
+    <div class="need-grid" id="meals-wrap" style="grid-template-columns:1fr;max-width:240px;" hidden><div class="need"><b id="meals-left">150</b><span>Meals Still Available</span></div></div>
     <form id="vf" style="text-align:left;" class="native-form" novalidate>
       <label for="name">Name</label>
       <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
@@ -224,7 +224,7 @@
 // The publishable key is public by design: RLS lets it insert into ftv_rsvps and nothing else.
 const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX60hLmCo8t7SU48Zkee1w_gr79c7MJ";
 const $ = id => document.getElementById(id);
-const MEALS = 200; // meals prepared for this event; change for the next one
+const MEALS = 150; // meals prepared for this event; change for the next one
 const EVENT_DATE = "2026-12-05"; // keep in sync with the next-event date above
 async function loadMeals() {
   try {
