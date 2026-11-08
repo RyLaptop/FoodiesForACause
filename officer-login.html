@@ -78,35 +78,16 @@
     <!-- Signed out -->
     <div id="auth" class="op-card" hidden>
       <form id="af" class="native-form" novalidate>
-        <label for="em">TAMU email</label>
+        <label for="em">Officer TAMU email</label>
         <input id="em" type="email" autocomplete="username" required>
-        <label for="pw">Password (10+ characters)</label>
-        <input id="pw" type="password" autocomplete="current-password" minlength="10" required>
+        <label for="code">Access code</label>
+        <input id="code" type="password" autocomplete="current-password" required>
         <button type="submit" id="signin" class="btn btn-solid">Sign in</button>
-        <p class="op-small">First time? Enter your email and a new password, then press Create account. Confirm the email we send, then sign in. Only emails on the officer list can see data.</p>
-        <p>
-          <button type="button" id="signup" class="btn btn-outline">Create account</button>
-          <button type="button" id="forgot" class="btn btn-outline">Forgot password</button>
-        </p>
-      </form>
-    </div>
-
-    <!-- Password reset -->
-    <div id="reset" class="op-card" hidden>
-      <form id="rf" class="native-form" novalidate>
-        <label for="np">New password (10+ characters)</label>
-        <input id="np" type="password" autocomplete="new-password" minlength="10" required>
-        <button type="submit" class="btn btn-solid">Set password</button>
+        <p class="op-small">Your access code is private to you. Ask Rylan if you do not have one.</p>
       </form>
     </div>
 
     <p id="msg" class="form-msg" role="status" style="text-align:center"></p>
-
-    <!-- Signed in, not an officer -->
-    <div id="denied" class="op-card" hidden>
-      <p>You are signed in as <b id="who-denied"></b>, but this email is not on the officer list. Ask an officer to add it, then sign in again.</p>
-      <button type="button" class="btn btn-outline" data-signout>Sign out</button>
-    </div>
 
     <!-- Officer view -->
     <div id="app" hidden>
@@ -155,7 +136,6 @@
 </footer>
 
 <script src="js/nav.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="js/officer.js"></script>
 </body>
 </html>
