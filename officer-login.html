@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Officer Login | Foodies For A Cause</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.op-wrap{max-width:1100px;margin:0 auto;padding:0 1rem}
+.op-card{max-width:420px;margin:0 auto;text-align:left}
+.op-bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.op-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.op-tabs button.on{background:var(--maroon,#500000);color:#fff}
+.op-tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.75rem}
+.op-tools input,.op-tools select{padding:.5rem .6rem;border:1px solid #ccc;border-radius:6px;font:inherit}
+.op-sum{font-weight:600;margin:.25rem 0 .75rem}
+.op-scroll{overflow:auto;border:1px solid #ddd;border-radius:8px;max-height:70vh}
+.op-scroll table{border-collapse:collapse;width:100%;font-size:.85rem}
+.op-scroll th,.op-scroll td{padding:.45rem .6rem;border-bottom:1px solid #eee;text-align:left;vertical-align:top;white-space:nowrap}
+.op-scroll td.wrap{white-space:normal;min-width:220px}
+.op-scroll th{position:sticky;top:0;background:#f6f1ea;z-index:1}
+.op-small{font-size:.85rem;color:#555}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="index.html" class="brand">
+      <img src="images/logo.png" alt="Foodies For A Cause logo" class="logo-mark-img" onerror="this.style.display='none'">
+      Foodies For A Cause
+    </a>
+    <nav>
+      <button class="nav-toggle-mobile" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">&#9776;</button>
+      <ul id="primary-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="meetings.html">Meetings</a></li>
+        <li class="has-dropdown">
+          <details>
+            <summary class="dropdown-toggle">Events <span>&#9662;</span></summary>
+            <div class="dropdown-menu">
+              <a href="events/fundraisers.html">Fundraisers</a>
+              <a href="events/service.html">Service Events</a>
+              <a href="events/social.html">Social Events</a>
+              <a href="events/food-drives.html">Food Drives</a>
+            </div>
+          </details>
+        </li>
+        <li><a href="feed-the-valley.html">Feed The Valley</a></li>
+        <li><a href="officers.html">Officers</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="https://www.zeffy.com/en-US/donation-form/help-feed-those-in-need" target="_blank" rel="noopener" class="nav-cta">Donate</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+<section class="page-hero">
+  <h1>Officer Login</h1>
+  <p>Sign-ups, RSVPs, members, and messages. Officers only.</p>
+</section>
+
+<section>
+  <div class="op-wrap">
+
+    <!-- Signed out -->
+    <div id="auth" class="op-card" hidden>
+      <form id="af" class="native-form" novalidate>
+        <label for="em">TAMU email</label>
+        <input id="em" type="email" autocomplete="username" required>
+        <label for="pw">Password (10+ characters)</label>
+        <input id="pw" type="password" autocomplete="current-password" minlength="10" required>
+        <button type="submit" id="signin" class="btn btn-solid">Sign in</button>
+        <p class="op-small">First time? Enter your email and a new password, then press Create account. Confirm the email we send, then sign in. Only emails on the officer list can see data.</p>
+        <p>
+          <button type="button" id="signup" class="btn btn-outline">Create account</button>
+          <button type="button" id="forgot" class="btn btn-outline">Forgot password</button>
+        </p>
+      </form>
+    </div>
+
+    <!-- Password reset -->
+    <div id="reset" class="op-card" hidden>
+      <form id="rf" class="native-form" novalidate>
+        <label for="np">New password (10+ characters)</label>
+        <input id="np" type="password" autocomplete="new-password" minlength="10" required>
+        <button type="submit" class="btn btn-solid">Set password</button>
+      </form>
+    </div>
+
+    <p id="msg" class="form-msg" role="status" style="text-align:center"></p>
+
+    <!-- Signed in, not an officer -->
+    <div id="denied" class="op-card" hidden>
+      <p>You are signed in as <b id="who-denied"></b>, but this email is not on the officer list. Ask an officer to add it, then sign in again.</p>
+      <button type="button" class="btn btn-outline" data-signout>Sign out</button>
+    </div>
+
+    <!-- Officer view -->
+    <div id="app" hidden>
+      <div class="op-bar">
+        <span class="op-small">Signed in as <b id="who"></b></span>
+        <span><button type="button" class="btn btn-outline" id="refresh">Refresh</button> <button type="button" class="btn btn-outline" data-signout>Sign out</button></span>
+      </div>
+      <div class="op-tabs" id="tabs"></div>
+      <div class="op-tools">
+        <input id="q" type="search" placeholder="Search" aria-label="Search rows">
+        <select id="f-event" aria-label="Filter by event date" hidden></select>
+        <select id="f-form" aria-label="Filter by form" hidden></select>
+        <button type="button" class="btn btn-outline" id="csv">Download CSV</button>
+      </div>
+      <p class="op-sum" id="sum"></p>
+      <div class="op-scroll"><table id="tbl"></table></div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <div class="brand-col">
+      <strong style="color:white;">Foodies For A Cause</strong>
+      <p style="max-width:320px; font-size:0.9rem;">A social service organization at Texas A&amp;M. We volunteer with food banks, throw potlucks and cookouts, and celebrate food through history, science, and culture.</p>
+    </div>
+    <div>
+      <strong style="color:white;">Explore</strong><br>
+      <a href="meetings.html">Meetings</a><br>
+      <a href="events/fundraisers.html">Fundraisers</a><br>
+      <a href="events/service.html">Service Events</a><br>
+      <a href="events/social.html">Social Events</a><br>
+      <a href="events/food-drives.html">Food Drives</a>
+    </div>
+    <div>
+      <strong style="color:white;">More</strong><br>
+      <a href="officers.html">Officers</a><br>
+      <a href="https://www.zeffy.com/en-US/donation-form/help-feed-those-in-need" target="_blank" rel="noopener">Donate</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Foodies For A Cause, a 501(c)(3) nonprofit organization (EIN 42-4448383). All rights reserved.</div>
+</footer>
+
+<script src="js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/officer.js"></script>
+</body>
+</html>
