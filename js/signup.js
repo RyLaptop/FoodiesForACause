@@ -1,4 +1,4 @@
-// The publishable key is public by design: RLS lets it insert into event_signups and nothing else.
+// The publishable key is public by design: RLS lets it insert into the signups_* tables and nothing else.
 const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX60hLmCo8t7SU48Zkee1w_gr79c7MJ";
 const $ = id => document.getElementById(id);
 const EV = window.SIGNUP_EVENT; // set on pages tied to one dated event (see ftv-volunteer.html)
@@ -23,7 +23,8 @@ $("sf").addEventListener("submit", async e => {
   if (name.length < 2) return say("Please enter your full name.");
   if (phone.replace(/\D/g, "").length < 7) return say("Please enter a valid phone number.");
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return say("Please enter a valid email.");
-  const body = {form: f.dataset.form, name, phone, email};
+  const table = {ftv: "signups_ftv", service: "signups_service", social: "signups_social", fundraiser: "signups_fundraiser"}[f.dataset.form];
+  const body = {name, phone, email};
   if (EV) body.event_date = EV.date;
   for (const k of f.dataset.fields.split(",")) {
     const v = d.get(k);
@@ -32,7 +33,7 @@ $("sf").addEventListener("submit", async e => {
   }
   const btn = $("go"); btn.disabled = true; say("");
   try {
-    const r = await fetch(SB + "/rest/v1/event_signups", {
+    const r = await fetch(SB + "/rest/v1/" + table, {
       method: "POST",
       headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json", Prefer: "return=minimal"},
       body: JSON.stringify(body)

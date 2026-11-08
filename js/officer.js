@@ -4,12 +4,16 @@ const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX6
 const $ = id => document.getElementById(id);
 
 const TABLES = {
+  summary: {label: "Summary", cols: []},
   ftv_rsvps: {label: "Meal RSVPs", cols: ["created_at", "event_date", "name", "party_size", "contact", "note", "photo_release"]},
-  event_signups: {label: "Volunteer sign-ups", cols: ["created_at", "form", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides", "can_bake", "can_cook", "associate_screener"]},
+  signups_ftv: {label: "FTV volunteers", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_cook", "associate_screener", "needs_ride", "can_give_rides"]},
+  signups_service: {label: "Service sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
+  signups_social: {label: "Social sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
+  signups_fundraiser: {label: "Fundraiser sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_bake", "needs_ride", "can_give_rides"]},
   members: {label: "Members", cols: ["created_at", "name", "email", "phone", "uin", "class_year"]},
   contact_messages: {label: "Contact messages", cols: ["created_at", "name", "email", "message"]}
 };
-let current = "ftv_rsvps", rows = [], auth = null; // auth = {email, code}, kept in this tab only
+let current = "summary", rows = [], auth = null; // auth = {email, code}, kept in this tab only
 
 function say(t, ok) { const m = $("msg"); m.textContent = t || ""; m.className = "form-msg " + (ok ? "ok" : "err"); }
 function show(id) { for (const x of ["auth", "app"]) $(x).hidden = x !== id; }
@@ -47,7 +51,59 @@ function buildTabs() {
   }
 }
 
+function setMode(summary) { $("tools").hidden = summary; $("wrap2").hidden = !summary; }
+
+function fillTable(t, head, data) {
+  t.innerHTML = "";
+  const hr = t.createTHead().insertRow();
+  for (const h of head) { const th = document.createElement("th"); th.textContent = h; hr.appendChild(th); }
+  const body = t.createTBody();
+  data.forEach((row, i) => {
+    const tr = body.insertRow();
+    row.forEach(v => { const td = tr.insertCell(); td.textContent = v; });
+    if (row[0] === "Total") tr.style.fontWeight = "700";
+  });
+}
+
+// Overview: counts per sign-up type and event, plus meal RSVPs per event.
+async function loadSummary() {
+  setMode(true);
+  $("sum").textContent = "Loading...";
+  const names = ["signups_ftv", "signups_service", "signups_social", "signups_fundraiser", "ftv_rsvps"];
+  const res = await Promise.all(names.map(fetchRows));
+  if (res.some(r => r.denied)) { signOut(); return say("Wrong email or password."); }
+  const bad = res.find(r => r.error);
+  if (bad) { $("sum").textContent = ""; return say(bad.error); }
+  say("");
+  const [ftv, service, social, fund, rsvps] = res.map(r => r.data);
+  const n = (list, f) => list.filter(f).length;
+  const kinds = [["FTV volunteers", ftv], ["Service", service], ["Social", social], ["Fundraiser", fund]];
+  const tot = [0, 0, 0, 0, 0, 0, 0], out = [];
+  for (const [label, list] of kinds) {
+    for (const d of [...new Set(list.map(r => r.event_date || ""))].sort().reverse()) {
+      const g = list.filter(r => (r.event_date || "") === d), isFtv = label === "FTV volunteers", isFund = label === "Fundraiser";
+      const v = [g.length, n(g, r => r.attending), n(g, r => r.needs_ride), n(g, r => r.can_give_rides), n(g, r => r.can_cook), n(g, r => r.can_bake), n(g, r => r.associate_screener)];
+      v.forEach((x, i) => tot[i] += x);
+      out.push([label, d || "no date", v[0], v[1], v[2], v[3], isFtv ? v[4] : "-", isFund ? v[5] : "-", isFtv ? v[6] : "-"]);
+    }
+  }
+  out.push(["Total", "", ...tot]);
+  fillTable($("tbl"), ["Type", "Event date", "Signed up", "Will attend / volunteer", "Need rides", "Can give rides", "Can cook", "Can bake", "Associate screeners"], out);
+  const rs = [];
+  let rt = [0, 0, 0];
+  for (const d of [...new Set(rsvps.map(r => r.event_date || ""))].sort().reverse()) {
+    const g = rsvps.filter(r => (r.event_date || "") === d), meals = g.reduce((s, r) => s + (r.party_size || 0), 0);
+    rs.push(["Meal RSVPs", d || "no date", g.length, meals, n(g, r => r.photo_release)]);
+    rt = [rt[0] + g.length, rt[1] + meals, rt[2] + n(g, r => r.photo_release)];
+  }
+  rs.push(["Total", "", ...rt]);
+  fillTable($("tbl2"), ["Type", "Event date", "RSVPs", "Meals reserved", "Photo release ok"], rs);
+  $("sum").textContent = tot[0] + " volunteer sign-ups, " + tot[2] + " need rides, " + tot[6] + " can screen, " + rt[1] + " meals reserved";
+}
+
 async function load() {
+  if (current === "summary") return loadSummary();
+  setMode(false);
   $("sum").textContent = "Loading...";
   const res = await fetchRows(current);
   if (res.denied) { signOut(); return say("Wrong email or password."); }
@@ -86,7 +142,7 @@ function render() {
   }
   let s = list.length + " row" + (list.length === 1 ? "" : "s");
   if (current === "ftv_rsvps") s += ", " + list.reduce((n, r) => n + (r.party_size || 0), 0) + " meals";
-  if (current === "event_signups") s += ", " + list.filter(r => r.associate_screener).length + " screeners, " + list.filter(r => r.can_cook).length + " cooks";
+  if (current === "signups_ftv") s += ", " + list.filter(r => r.associate_screener).length + " screeners, " + list.filter(r => r.can_cook).length + " cooks";
   $("sum").textContent = s;
 }
 
@@ -103,7 +159,7 @@ function csv() {
 
 async function enter(email, code) {
   auth = {email, code};
-  const res = await fetchRows(current);
+  const res = await fetchRows("ftv_rsvps"); // credential check
   if (res.denied) { auth = null; return say("Wrong email or password."); }
   if (res.error) { auth = null; return say(res.error); }
   try { sessionStorage.setItem("ffac-officer", JSON.stringify(auth)); } catch (e) {}
@@ -111,10 +167,7 @@ async function enter(email, code) {
   say("");
   show("app");
   buildTabs();
-  rows = res.data;
-  fillFilter("f-event", "event_date", "All events");
-  fillFilter("f-form", "form", "All forms");
-  render();
+  load();
 }
 
 $("af").addEventListener("submit", e => {
