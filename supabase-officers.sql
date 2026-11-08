@@ -24,9 +24,10 @@ end $$;
 revoke execute on function officer_data(text, text, text) from public;
 grant execute on function officer_data(text, text, text) to anon, authenticated;
 
--- Add an officer, or issue a new code (run in the Supabase SQL editor, copy the code it returns, send it privately):
---   insert into officers (email) values ('name@tamu.edu') on conflict do nothing;
---   with c as (select encode(extensions.gen_random_bytes(10), 'hex') as code)
---   update officers set code_hash = extensions.crypt((select code from c), extensions.gen_salt('bf'))
---   where lower(email) = 'name@tamu.edu' returning email, (select code from c) as access_code;
+-- Currently every officer uses one shared password (set by Rylan). The email must be on this list.
+-- Add an officer (run in the Supabase SQL editor):
+--   insert into officers (email, code_hash) values ('name@tamu.edu', extensions.crypt('PASSWORD', extensions.gen_salt('bf')));
+-- Change the shared password for everyone:
+--   update officers set code_hash = extensions.crypt('NEWPASSWORD', extensions.gen_salt('bf'));
 -- Remove an officer: delete from officers where email = 'name@tamu.edu';
+-- A different password per officer is safer: set code_hash per row instead of for all rows.

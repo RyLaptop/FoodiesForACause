@@ -50,7 +50,7 @@ function buildTabs() {
 async function load() {
   $("sum").textContent = "Loading...";
   const res = await fetchRows(current);
-  if (res.denied) { signOut(); return say("Wrong email or access code."); }
+  if (res.denied) { signOut(); return say("Wrong email or password."); }
   if (res.error) { rows = []; $("sum").textContent = ""; say(res.error); render(); return; }
   say("");
   rows = res.data;
@@ -104,7 +104,7 @@ function csv() {
 async function enter(email, code) {
   auth = {email, code};
   const res = await fetchRows(current);
-  if (res.denied) { auth = null; return say("Wrong email or access code."); }
+  if (res.denied) { auth = null; return say("Wrong email or password."); }
   if (res.error) { auth = null; return say(res.error); }
   try { sessionStorage.setItem("ffac-officer", JSON.stringify(auth)); } catch (e) {}
   $("who").textContent = email;
@@ -120,7 +120,7 @@ async function enter(email, code) {
 $("af").addEventListener("submit", e => {
   e.preventDefault();
   const email = $("em").value.trim(), code = $("code").value.trim();
-  if (!email || !code) return say("Enter your email and access code.");
+  if (!email || !code) return say("Enter your email and password.");
   enter(email, code);
 });
 document.querySelectorAll("[data-signout]").forEach(b => b.onclick = signOut);
