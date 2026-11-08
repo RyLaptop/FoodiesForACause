@@ -61,17 +61,14 @@
     <h2 class="section-title">Next Event</h2>
 
     <article class="flyer-feature">
-      <a class="flyer" href="images/flyers/ftv-2026-11-07.jpg" target="_blank" rel="noopener"><img src="images/flyers/ftv-2026-11-07.jpg" alt="Feed The Valley flyer: free meals and health screenings, 11/7/2026"></a>
       <div class="flyer-body">
         <span class="tag">Feed The Valley</span>
         <h3>Free Meals and Health Screenings</h3>
         <dl>
-          <dt>When</dt><dd>Saturday, November 7, 2026, 1&ndash;3 PM</dd>
+          <dt>When</dt><dd>Saturday, December 5, 2026, 1&ndash;3 PM</dd>
           <dt>Where</dt><dd>903 N Washington Ave, Bryan, TX 77803</dd>
         </dl>
-        <p>Volunteer with Foodies For A Cause to hand out free meals and provide health screenings to those in need.</p>
-        <p class="flyer-hint">Time may change pending the TAMU football game start time.</p>
-      </div>
+        <p>Volunteer with Foodies For A Cause to hand out free meals and provide health screenings to those in need.</p>      </div>
     </article>
 
     <p style="text-align:center;"><a href="ftv-volunteer.html" class="btn btn-solid">Sign Up to Volunteer</a></p>
@@ -150,6 +147,15 @@
     <h2 class="section-title">Where we've been</h2>
 
     <div class="event-row">
+      <div class="date-stamp"><span class="month">NOV</span><span class="day">7</span></div>
+      <div class="event-body">
+        <h3>Feed The Valley: free meals and health screenings</h3>
+        <div class="meta"><strong>Where:</strong> 903 N Washington Ave, Bryan &nbsp;&bull;&nbsp; <strong>Fed:</strong> 117 people</div>
+        <p>Our second Feed The Valley event, held on 11/7.</p>
+      </div>
+    </div>
+
+    <div class="event-row">
       <div class="date-stamp"><span class="month">SEP</span><span class="day">12</span></div>
       <div class="event-body">
         <h3>Feed The Valley: first tabling event</h3>
@@ -219,9 +225,10 @@
 const SB = "https://rtzmvgpomudzxumlnmyh.supabase.co", KEY = "sb_publishable_GX60hLmCo8t7SU48Zkee1w_gr79c7MJ";
 const $ = id => document.getElementById(id);
 const MEALS = 200; // meals prepared for this event; change for the next one
+const EVENT_DATE = "2026-12-05"; // keep in sync with the next-event date above
 async function loadMeals() {
   try {
-    const r = await fetch(SB + "/rest/v1/rpc/ftv_rsvp_total", {method: "POST", headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json"}, body: "{}"});
+    const r = await fetch(SB + "/rest/v1/rpc/ftv_rsvp_total", {method: "POST", headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json"}, body: JSON.stringify({p_date: EVENT_DATE})});
     const total = await r.json();
     if (typeof total === "number") { $("meals-left").textContent = Math.max(0, MEALS - total); $("meals-wrap").hidden = false; }
   } catch (e) {}
@@ -241,7 +248,7 @@ $("vf").addEventListener("submit", async e => {
     const r = await fetch(SB + "/rest/v1/ftv_rsvps", {
       method: "POST",
       headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json", Prefer: "return=minimal"},
-      body: JSON.stringify({name, party_size: party, contact: (d.get("contact") || "").trim() || null, note: (d.get("note") || "").trim() || null, photo_release: true})
+      body: JSON.stringify({name, party_size: party, contact: (d.get("contact") || "").trim() || null, note: (d.get("note") || "").trim() || null, photo_release: true, event_date: EVENT_DATE})
     });
     if (r.ok) { f.reset(); say("You're on the list. See you there!", true); loadMeals(); }
     else say("Something went wrong. Please try again.");

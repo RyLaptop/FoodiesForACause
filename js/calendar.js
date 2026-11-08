@@ -23,7 +23,8 @@ const EVENTS = [
   {d: "2026-11-13", c: "drive", t: "Food-Givings Prizes Announced", time: "", where: "Top Donor Awards", href: "events/food-drives.html"},
   {d: "2026-11-20", c: "drive", t: "Food-Givings Ends", time: "", where: "Drop-off at MSC, Zachry, Commons, Main Rec", href: "events/food-drives.html"},
   {d: "2026-11-21", c: "service", t: "Brazos Valley Food Bank", time: "8–10 AM", where: "Brazos Valley Food Bank", href: "events/service.html"},
-  {d: "2026-11-07", c: "ftv", t: "Feed The Valley", time: "1–3 PM (may change)", where: "903 N Washington Ave, Bryan", href: "feed-the-valley.html"}
+  {d: "2026-11-07", c: "ftv", t: "Feed The Valley", time: "1–3 PM", where: "903 N Washington Ave, Bryan", href: "feed-the-valley.html"},
+  {d: "2026-12-05", c: "ftv", t: "Feed The Valley", time: "1–3 PM", where: "903 N Washington Ave, Bryan", href: "feed-the-valley.html"}
 ];
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2, "0");

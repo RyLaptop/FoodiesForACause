@@ -25,3 +25,13 @@ create or replace function ftv_rsvp_total() returns integer
 language sql security definer set search_path = public as
 $$ select coalesce(sum(party_size), 0)::int from ftv_rsvps $$;
 grant execute on function ftv_rsvp_total() to anon;
+
+-- Per-event RSVPs. Existing rows belong to the Nov 7 event; new rows default to the current event (Dec 5).
+-- Change the default, and the date in feed-the-valley.html, for each new event.
+alter table ftv_rsvps add column if not exists event_date date;
+update ftv_rsvps set event_date = date '2026-11-07' where event_date is null;
+alter table ftv_rsvps alter column event_date set default date '2026-12-05';
+create or replace function ftv_rsvp_total(p_date date) returns integer
+language sql security definer set search_path = public as
+$$ select coalesce(sum(party_size), 0)::int from ftv_rsvps where event_date = p_date $$;
+grant execute on function ftv_rsvp_total(date) to anon;
