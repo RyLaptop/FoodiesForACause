@@ -10,6 +10,7 @@ async function loadCounts() {
     if (c && typeof c.volunteers === "number") {
       $("need-vol").textContent = Math.max(0, EV.needs.volunteers - c.volunteers);
       $("need-cook").textContent = Math.max(0, EV.needs.cooks - c.cooks);
+      if ($("need-scr") && typeof c.screeners === "number") $("need-scr").textContent = Math.max(0, EV.needs.screeners - c.screeners);
     }
   } catch (e) {}
 }
