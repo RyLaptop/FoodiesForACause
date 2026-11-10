@@ -6,7 +6,7 @@ const $ = id => document.getElementById(id);
 const TABLES = {
   summary: {label: "Summary", cols: []},
   ftv_rsvps: {label: "Meal RSVPs", cols: ["created_at", "event_date", "name", "party_size", "contact", "note", "photo_release"]},
-  signups_ftv: {label: "FTV volunteers", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_cook", "associate_screener", "needs_ride", "can_give_rides"]},
+  signups_ftv: {label: "FTV volunteers", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "can_cook", "associate_screener", "vitals_cert", "needs_ride", "can_give_rides"]},
   signups_service: {label: "Service sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_social: {label: "Social sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_fundraiser: {label: "Fundraiser sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_bake", "needs_ride", "can_give_rides"]},

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feed The Valley: Associate Screener | Foodies For A Cause</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="index.html" class="brand">
+      <img src="images/logo.png" alt="Foodies For A Cause logo" class="logo-mark-img" onerror="this.style.display='none'">
+      Foodies For A Cause
+    </a>
+    <nav>
+      <button class="nav-toggle-mobile" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-nav">&#9776;</button>
+      <ul id="primary-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="meetings.html">Meetings</a></li>
+        <li class="has-dropdown">
+          <details>
+            <summary class="dropdown-toggle">Events <span>&#9662;</span></summary>
+            <div class="dropdown-menu">
+              <a href="events/fundraisers.html">Fundraisers</a>
+              <a href="events/service.html">Service Events</a>
+              <a href="events/social.html">Social Events</a>
+              <a href="events/food-drives.html">Food Drives</a>
+            </div>
+          </details>
+        </li>
+        <li><a href="feed-the-valley.html">Feed The Valley</a></li>
+        <li><a href="officers.html">Officers</a></li>
+        <li><a href="calendar.html">Calendar</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="https://www.zeffy.com/en-US/donation-form/help-feed-those-in-need" target="_blank" rel="noopener" class="nav-cta">Donate</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main-content">
+
+<section class="page-hero">
+  <h1>Feed The Valley: Associate Screener</h1>
+  <p>Saturday, December 5, 2026, 1&ndash;3 PM, 903 N Washington Ave, Bryan, TX 77803.</p>
+</section>
+
+<section>
+  <div class="container">
+    <div class="need-grid one"><div class="need"><b id="need-scr">5</b><span>Associate Screeners Needed</span></div></div>
+    <p class="form-intro">Associate Screeners take basic vitals (blood pressure, temperature, pulse ox, and similar) at our free health screening table. Screening runs <strong>1&ndash;3 PM</strong> with food handout. Cooking is a separate sign-up (9&ndash;11:30 AM).</p>
+    <p class="form-note"><strong>No experience or certification?</strong> You will be sent an email <strong>1 week before the event</strong> for a training course on taking vitals. The training takes <strong>1 hour</strong>.</p>
+
+    <form id="sf" class="native-form" data-form="ftv" data-role="screener" data-thanks="Thank you! You are signed up as an Associate Screener for Saturday, December 5, 1 to 3 PM." data-fields="volunteering,needs_ride,can_give_rides" novalidate>
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
+      <label for="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" required maxlength="30">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+      <fieldset class="yn">
+        <legend>Will you be volunteering as an Associate Screener?</legend>
+        <label class="opt"><input type="radio" name="volunteering" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="volunteering" value="no"> No</label>
+      </fieldset>
+      <fieldset class="yn">
+        <legend>Do you have a certification or training in taking vitals (blood pressure, temperature, pulse ox, pulse, etc.)?</legend>
+        <label class="opt"><input type="radio" name="vitals_trained" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="vitals_trained" value="no"> No</label>
+      </fieldset>
+      <div id="cert-wrap" hidden>
+        <label for="vitals_cert">Which certification or training do you have?</label>
+        <select id="vitals_cert" name="vitals_cert">
+          <option value="">Select one</option>
+          <optgroup label="Emergency medical services">
+            <option>Emergency Medical Technician (EMT / EMT-B)</option>
+            <option>Advanced EMT (AEMT)</option>
+            <option>Paramedic</option>
+            <option>Emergency Medical Responder (EMR)</option>
+            <option>Wilderness First Responder (WFR)</option>
+            <option>Military medic or corpsman training</option>
+          </optgroup>
+          <optgroup label="Nursing and patient care">
+            <option>Registered Nurse (RN)</option>
+            <option>Licensed Vocational or Practical Nurse (LVN / LPN)</option>
+            <option>Nursing student (completed clinical skills lab)</option>
+            <option>Certified Nursing Assistant (CNA)</option>
+            <option>Patient Care Technician (PCT / CPCT/A)</option>
+          </optgroup>
+          <optgroup label="Medical assisting">
+            <option>Certified Medical Assistant (CMA, AAMA)</option>
+            <option>Registered Medical Assistant (RMA, AMT)</option>
+            <option>Certified Clinical Medical Assistant (CCMA, NHA)</option>
+          </optgroup>
+          <optgroup label="Other clinical training">
+            <option>Physician, PA, or NP (or student in those programs)</option>
+            <option>Phlebotomy Technician (CPT)</option>
+            <option>Other allied health license (respiratory therapist, PTA, etc.)</option>
+            <option>BLS for Healthcare Providers (AHA)</option>
+            <option>High school health science or HOSA clinical skills training</option>
+            <option>First Aid / CPR / AED course that covered vitals</option>
+            <option>Other</option>
+          </optgroup>
+        </select>
+      </div>
+      <div id="cert-other-wrap" hidden>
+        <label for="vitals_cert_other">Please describe your training</label>
+        <input id="vitals_cert_other" name="vitals_cert_other" type="text" maxlength="100">
+      </div>
+      <fieldset class="yn">
+        <legend>Do you need a ride?</legend>
+        <label class="opt"><input type="radio" name="needs_ride" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="needs_ride" value="no"> No</label>
+      </fieldset>
+      <fieldset class="yn">
+        <legend>Can you provide rides to others?</legend>
+        <label class="opt"><input type="radio" name="can_give_rides" value="yes" required> Yes</label>
+        <label class="opt"><input type="radio" name="can_give_rides" value="no"> No</label>
+      </fieldset>
+      <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button id="go" class="btn btn-solid" type="submit">Sign up</button>
+      <div id="msg" class="form-msg" role="status" aria-live="polite"></div>
+    </form>
+    <p class="back-link"><a href="ftv-volunteer.html">&larr; See all Feed The Valley roles</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <div class="brand-col">
+      <strong style="color:white;">Foodies For A Cause</strong>
+      <p style="max-width:320px; font-size:0.9rem;">A social service organization at Texas A&amp;M. We volunteer with food banks, throw potlucks and cookouts, and celebrate food through history, science, and culture.</p>
+    </div>
+    <div>
+      <strong style="color:white;">Explore</strong><br>
+      <a href="meetings.html">Meetings</a><br>
+      <a href="events/fundraisers.html">Fundraisers</a><br>
+      <a href="events/service.html">Service Events</a><br>
+      <a href="events/social.html">Social Events</a><br>
+      <a href="events/food-drives.html">Food Drives</a>
+    </div>
+    <div>
+      <strong style="color:white;">More</strong><br>
+      <a href="officers.html">Officers</a><br>
+      <a href="https://www.zeffy.com/en-US/donation-form/help-feed-those-in-need" target="_blank" rel="noopener">Donate</a><br>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Foodies For A Cause, a 501(c)(3) nonprofit organization (EIN 42-4448383). All rights reserved.</div>
+</footer>
+
+<script src="js/nav.js"></script>
+<!-- Per-event settings. For a new Feed The Valley event: change the date and the needs, nothing else.
+     Responses are tagged with this date and the counters tick down from the sign-ups that match it. -->
+<script>window.SIGNUP_EVENT = {date: "2026-12-05", needs: {volunteers: 10, cooks: 10, screeners: 5}};</script>
+<script src="js/signup.js"></script>
+</body>
+</html>
