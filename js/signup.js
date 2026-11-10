@@ -76,7 +76,7 @@ if (sf) {
       });
       if (r.ok) {
         f.reset(); syncCert();
-        say((f.dataset.thanks || "Thank you! You're signed up.") + (noTraining ? " Since you have no vitals training yet, watch for an email 1 week before the event for a 1-hour training course." : ""), true);
+        say((f.dataset.thanks || "Thank you! You're signed up.") + (noTraining ? " Since you have no vitals training yet, watch for an email 1 week before the event to schedule your 1-hour in-person training." : ""), true);
         loadCounts();
       }
       else say("Something went wrong. Please try again.");
