@@ -142,7 +142,7 @@ function render() {
   }
   let s = list.length + " row" + (list.length === 1 ? "" : "s");
   if (current === "ftv_rsvps") s += ", " + list.reduce((n, r) => n + (r.party_size || 0), 0) + " meals";
-  if (current === "signups_ftv") s += ", " + list.filter(r => r.associate_screener).length + " screeners, " + list.filter(r => r.can_cook).length + " cooks";
+  if (current === "signups_ftv") s += ", " + list.filter(r => r.associate_screener).length + " screeners, " + list.filter(r => r.can_cook).length + " cooks, " + list.filter(r => r.attending && (r.role || "handout") === "handout").length + " food handout";
   $("sum").textContent = s;
 }
 
