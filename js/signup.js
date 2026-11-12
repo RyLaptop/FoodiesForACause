@@ -8,10 +8,20 @@ async function loadCounts() {
     const r = await fetch(SB + "/rest/v1/rpc/ftv_signup_counts", {method: "POST", headers: {apikey: KEY, Authorization: "Bearer " + KEY, "Content-Type": "application/json"}, body: JSON.stringify({p_date: EV.date})});
     const c = await r.json();
     if (c && typeof c.volunteers === "number") {
-      const set = (id, need, got) => { if ($(id) && typeof got === "number") $(id).textContent = Math.max(0, need - got); };
-      set("need-vol", EV.needs.volunteers, c.volunteers);
-      set("need-cook", EV.needs.cooks, c.cooks);
-      set("need-scr", EV.needs.screeners, c.screeners);
+      // At zero left: gray out that role's button (hub link and/or the form's submit button) and say it is filled.
+      const set = (id, need, got, page) => {
+        if (!$(id) || typeof got !== "number") return;
+        const left = Math.max(0, need - got);
+        $(id).textContent = left;
+        if (left) return;
+        const btns = [...document.querySelectorAll('a[href="' + page + '"]')];
+        if ($("go") && sf) btns.push($("go"));
+        for (const b of btns) { b.textContent = "Filled"; b.classList.add("filled"); b.setAttribute("aria-disabled", "true"); if (b.tagName === "BUTTON") b.disabled = true; }
+        if (sf) say("This sign-up has been filled.");
+      };
+      set("need-vol", EV.needs.volunteers, c.volunteers, "ftv-handout.html");
+      set("need-cook", EV.needs.cooks, c.cooks, "ftv-cooking.html");
+      set("need-scr", EV.needs.screeners, c.screeners, "ftv-screener.html");
     }
   } catch (e) {}
 }

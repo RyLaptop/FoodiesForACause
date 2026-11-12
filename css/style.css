@@ -347,6 +347,7 @@ nav a:hover { color: var(--maroon); background: rgba(217, 95, 14, 0.06); text-de
   border: 2px solid var(--maroon);
 }
 
+.btn-solid.filled, .btn-solid.filled:hover { background: #c9c9c9; border-color: #c9c9c9; color: #666; cursor: not-allowed; pointer-events: none; }
 .btn-solid:hover { background: var(--maroon-dark); border-color: var(--maroon-dark); color: var(--warm-white); }
 
 /* ---------- Page header (non-home pages) ---------- */
