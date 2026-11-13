@@ -6,7 +6,10 @@ const $ = id => document.getElementById(id);
 const TABLES = {
   summary: {label: "Summary", cols: []},
   ftv_rsvps: {label: "Meal RSVPs", cols: ["created_at", "event_date", "name", "party_size", "contact", "note", "photo_release"]},
-  signups_ftv: {label: "FTV volunteers", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "can_cook", "associate_screener", "vitals_cert", "needs_ride", "can_give_rides"]},
+  // FTV volunteers are one table (signups_ftv) shown as three role tabs.
+  ftv_cook: {label: "FTV cooks", src: "signups_ftv", role: "cook", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "needs_ride", "can_give_rides"]},
+  ftv_handout: {label: "FTV handout", src: "signups_ftv", role: "handout", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "needs_ride", "can_give_rides"]},
+  ftv_screener: {label: "FTV screeners", src: "signups_ftv", role: "screener", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "vitals_trained", "vitals_cert", "needs_ride", "can_give_rides"]},
   signups_service: {label: "Service sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_social: {label: "Social sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_fundraiser: {label: "Fundraiser sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_bake", "needs_ride", "can_give_rides"]},
@@ -14,6 +17,9 @@ const TABLES = {
   contact_messages: {label: "Contact messages", cols: ["created_at", "name", "email", "message"]}
 };
 let current = "summary", rows = [], auth = null; // auth = {email, code}, kept in this tab only
+
+// Rows from before roles existed (role is null) match by their old flags, same as the sign-up page counters.
+const inRole = (r, role) => r.role ? r.role === role : !!({cook: r.can_cook, screener: r.associate_screener, handout: r.attending})[role];
 
 function say(t, ok) { const m = $("msg"); m.textContent = t || ""; m.className = "form-msg " + (ok ? "ok" : "err"); }
 function show(id) { for (const x of ["auth", "app"]) $(x).hidden = x !== id; }
@@ -105,11 +111,11 @@ async function load() {
   if (current === "summary") return loadSummary();
   setMode(false);
   $("sum").textContent = "Loading...";
-  const res = await fetchRows(current);
+  const t = TABLES[current], res = await fetchRows(t.src || current);
   if (res.denied) { signOut(); return say("Wrong email or password."); }
   if (res.error) { rows = []; $("sum").textContent = ""; say(res.error); render(); return; }
   say("");
-  rows = res.data;
+  rows = t.role ? res.data.filter(r => inRole(r, t.role)).map(r => ({...r, role: t.role})) : res.data; // old rows have no role, show the tab's
   fillFilter("f-event", "event_date", "All events");
   fillFilter("f-form", "form", "All forms");
   render();
@@ -142,7 +148,6 @@ function render() {
   }
   let s = list.length + " row" + (list.length === 1 ? "" : "s");
   if (current === "ftv_rsvps") s += ", " + list.reduce((n, r) => n + (r.party_size || 0), 0) + " meals";
-  if (current === "signups_ftv") s += ", " + list.filter(r => r.associate_screener).length + " screeners, " + list.filter(r => r.can_cook).length + " cooks, " + list.filter(r => r.attending && (r.role || "handout") === "handout").length + " food handout";
   $("sum").textContent = s;
 }
 
