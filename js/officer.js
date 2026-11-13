@@ -6,10 +6,7 @@ const $ = id => document.getElementById(id);
 const TABLES = {
   summary: {label: "Summary", cols: []},
   ftv_rsvps: {label: "Meal RSVPs", cols: ["created_at", "event_date", "name", "party_size", "contact", "note", "photo_release"]},
-  // FTV volunteers are one table (signups_ftv) shown as three role tabs.
-  ftv_cook: {label: "FTV cooks", src: "signups_ftv", role: "cook", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "needs_ride", "can_give_rides"]},
-  ftv_handout: {label: "FTV handout", src: "signups_ftv", role: "handout", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "needs_ride", "can_give_rides"]},
-  ftv_screener: {label: "FTV screeners", src: "signups_ftv", role: "screener", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "vitals_trained", "vitals_cert", "needs_ride", "can_give_rides"]},
+  signups_ftv: {label: "FTV volunteers", cols: ["created_at", "event_date", "name", "phone", "email", "role", "attending", "vitals_trained", "vitals_cert", "needs_ride", "can_give_rides"]}, // CSV + search; the screen shows one table per role (FTV_ROLES)
   signups_service: {label: "Service sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_social: {label: "Social sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "needs_ride", "can_give_rides"]},
   signups_fundraiser: {label: "Fundraiser sign-ups", cols: ["created_at", "event_date", "name", "phone", "email", "attending", "can_bake", "needs_ride", "can_give_rides"]},
@@ -20,6 +17,13 @@ let current = "summary", rows = [], auth = null; // auth = {email, code}, kept i
 
 // Rows from before roles existed (role is null) match by their old flags, same as the sign-up page counters.
 const inRole = (r, role) => r.role ? r.role === role : !!({cook: r.can_cook, screener: r.associate_screener, handout: r.attending})[role];
+const roleOf = r => r.role || (r.associate_screener ? "screener" : r.can_cook ? "cook" : "handout");
+const FTV_BASE = ["created_at", "event_date", "name", "phone", "email", "role", "attending"], FTV_RIDES = ["needs_ride", "can_give_rides"];
+const FTV_ROLES = [
+  ["cook", "Cooks", [...FTV_BASE, ...FTV_RIDES]],
+  ["handout", "Food handout", [...FTV_BASE, ...FTV_RIDES]],
+  ["screener", "Associate screeners", [...FTV_BASE, "vitals_trained", "vitals_cert", ...FTV_RIDES]]
+];
 
 function say(t, ok) { const m = $("msg"); m.textContent = t || ""; m.className = "form-msg " + (ok ? "ok" : "err"); }
 function show(id) { for (const x of ["auth", "app"]) $(x).hidden = x !== id; }
@@ -57,7 +61,7 @@ function buildTabs() {
   }
 }
 
-function setMode(summary) { $("tools").hidden = summary; $("wrap2").hidden = !summary; }
+function setMode(summary) { $("tools").hidden = summary; $("wrap2").hidden = !summary; $("tbl").parentElement.hidden = false; $("ftv-sections").hidden = true; }
 
 function fillTable(t, head, data) {
   t.innerHTML = "";
@@ -111,11 +115,11 @@ async function load() {
   if (current === "summary") return loadSummary();
   setMode(false);
   $("sum").textContent = "Loading...";
-  const t = TABLES[current], res = await fetchRows(t.src || current);
+  const res = await fetchRows(current);
   if (res.denied) { signOut(); return say("Wrong email or password."); }
   if (res.error) { rows = []; $("sum").textContent = ""; say(res.error); render(); return; }
   say("");
-  rows = t.role ? res.data.filter(r => inRole(r, t.role)).map(r => ({...r, role: t.role})) : res.data; // old rows have no role, show the tab's
+  rows = res.data;
   fillFilter("f-event", "event_date", "All events");
   fillFilter("f-form", "form", "All forms");
   render();
@@ -136,7 +140,26 @@ function filtered() {
     (!q || TABLES[current].cols.some(c => cell(c, r[c]).toLowerCase().includes(q))));
 }
 
+// FTV volunteers: one table per role, inside the one tab. Old rows (no role) land in each role they flagged.
+function renderFtv(list) {
+  const box = $("ftv-sections"), counts = [];
+  box.innerHTML = "";
+  for (const [role, label, cols] of FTV_ROLES) {
+    const g = list.filter(r => inRole(r, role));
+    counts.push(g.length + " " + label.toLowerCase());
+    const h = document.createElement("h3"), wrap = document.createElement("div"), t = document.createElement("table");
+    h.textContent = label + " (" + g.length + ")";
+    wrap.className = "op-scroll"; wrap.style.marginBottom = "1.25rem"; wrap.appendChild(t);
+    box.append(h, wrap);
+    fillTable(t, cols.map(c => c.replace(/_/g, " ")), g.map(r => cols.map(c => cell(c, c === "role" ? role : r[c]))));
+  }
+  $("sum").textContent = counts.join(", ");
+}
+
 function render() {
+  const ftv = current === "signups_ftv";
+  $("tbl").parentElement.hidden = ftv; $("ftv-sections").hidden = !ftv;
+  if (ftv) return renderFtv(filtered());
   const cols = TABLES[current].cols, list = filtered(), t = $("tbl");
   t.innerHTML = "";
   const head = t.createTHead().insertRow();
@@ -154,7 +177,7 @@ function render() {
 function csv() {
   const cols = TABLES[current].cols;
   const esc = v => { let s = cell("", v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
-  const lines = [cols.join(",")].concat(filtered().map(r => cols.map(c => esc(c === "created_at" ? cell(c, r[c]) : r[c])).join(",")));
+  const lines = [cols.join(",")].concat(filtered().map(r => cols.map(c => esc(c === "created_at" ? cell(c, r[c]) : c === "role" ? roleOf(r) : r[c])).join(",")));
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([lines.join("\n")], {type: "text/csv"}));
   a.download = current + "-" + new Date().toISOString().slice(0, 10) + ".csv";
