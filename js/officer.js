@@ -56,7 +56,7 @@ function buildTabs() {
   for (const [k, t] of Object.entries(TABLES)) {
     const b = document.createElement("button");
     b.type = "button"; b.className = "btn btn-solid" + (k === current ? " on" : ""); b.textContent = t.label;
-    b.onclick = () => { current = k; $("q").value = ""; buildTabs(); load(); };
+    b.onclick = () => { current = k; $("q").value = ""; $("f-event").value = ""; buildTabs(); load(); };
     $("tabs").appendChild(b);
   }
 }
@@ -130,8 +130,14 @@ function fillFilter(id, col, allLabel) {
   s.hidden = !has;
   if (!has) return;
   const vals = [...new Set(rows.map(r => r[col]).filter(v => v !== null && v !== undefined))].sort().reverse();
+  const prev = s.value;
   s.innerHTML = "";
   for (const v of ["", ...vals]) { const o = document.createElement("option"); o.value = v; o.textContent = v || allLabel; s.appendChild(o); }
+  if (col === "event_date" && vals.length) {
+    // Default to the nearest upcoming event, else the most recent past one. Keep a pick made before a refresh.
+    const today = new Date().toLocaleDateString("en-CA", {timeZone: "America/Chicago"});
+    s.value = prev && vals.includes(prev) ? prev : (vals.filter(v => v >= today).pop() || vals[0]);
+  }
 }
 
 function filtered() {
