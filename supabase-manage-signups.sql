@@ -6,10 +6,13 @@
 
 create or replace function _same_person(a_name text, a_phone text, a_email text, b_name text, b_phone text, b_email text)
 returns boolean language sql immutable as
-$$ select lower(btrim(coalesce(a_name, ''))) = lower(btrim(coalesce(b_name, '')))
+$$ select regexp_replace(lower(btrim(coalesce(a_name, ''))), '\s+', ' ', 'g') = regexp_replace(lower(btrim(coalesce(b_name, ''))), '\s+', ' ', 'g')
       and right(regexp_replace(coalesce(a_phone, ''), '\D', '', 'g'), 10) <> ''
       and right(regexp_replace(coalesce(a_phone, ''), '\D', '', 'g'), 10) = right(regexp_replace(coalesce(b_phone, ''), '\D', '', 'g'), 10)
-      and lower(btrim(coalesce(a_email, ''))) = lower(btrim(coalesce(b_email, ''))) $$;
+      and left(lower(split_part(btrim(coalesce(a_email, '')), '@', 1)), 5) <> ''
+      and left(lower(split_part(btrim(coalesce(a_email, '')), '@', 1)), 5) = left(lower(split_part(btrim(coalesce(b_email, '')), '@', 1)), 5) $$;
+-- Forgiving on purpose, so typos don't lock people out: name ignores case and extra spaces, phone compares digits only
+-- (last 10), email compares only the first 5 characters before the @, ignoring case.
 
 -- Find: every sign-up that matches all three of name, phone and email.
 create or replace function my_signups(p_name text, p_phone text, p_email text) returns jsonb
@@ -19,7 +22,7 @@ declare r jsonb; today date := (now() at time zone 'America/Chicago')::date;
 begin
   if char_length(btrim(coalesce(p_name, ''))) < 2
      or char_length(regexp_replace(coalesce(p_phone, ''), '\D', '', 'g')) < 7
-     or coalesce(p_email, '') !~* '^[^@\s]+@[^@\s]+\.[^@\s]+$' then
+     or char_length(btrim(coalesce(p_email, ''))) < 3 then
     return '[]'::jsonb;
   end if;
   select coalesce(jsonb_agg(x order by x->>'event_date' desc nulls last), '[]'::jsonb) into r from (
